@@ -6,7 +6,7 @@ import BookShow from '../../screens/Bookshow/BookShow'
 class Header extends Component{
     bookShowHandler(movieId){
        
-        ReactDOM.render(<div><BookShow movieId={movieId} /></div>,
+        ReactDOM.render(<div><BookShow movieName={this.props.movieName} /></div>,
           document.getElementById('root'));
         }
     render(){

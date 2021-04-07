@@ -18,6 +18,7 @@ class Details extends Component{
         super();
         this.state={
             movie:{
+                title:"",
                 genres: [],
                 trailer_url: "",
                 artists: []
@@ -101,7 +102,7 @@ class Details extends Component{
         }
         return(
             <div className="details">
-                <Header showBooking="true"/>
+                <Header showBooking="true" movieName={this.state.movie.title}/>
                 <Button className="back" variant="contained" color="primary" onClick={this.backToHomeHandler}> Back</Button><br/><br />
                 <div className="flex-containerDetails"> 
                     <div className="leftDetails">
