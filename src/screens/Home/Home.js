@@ -21,6 +21,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import genres from '../../common/genre';
 import artists from '../../common/artists';
+import ReactDOM from 'react-dom';
+import Details from '../../screens/Details/Details';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -89,6 +91,10 @@ class Home extends Component{
     filterApplyHandler = event => {
      
     }
+    movieClickHandler = (movieId) => {
+        ReactDOM.render(<div><Details movieId={movieId} /></div>,
+            document.getElementById('root'));
+    }
      
     render()
     {
@@ -113,7 +119,7 @@ class Home extends Component{
                 <div className="left">
                     <GridList cellHeight={350}  cols={4} className={classes.gridListMain}>
                         {moviesData.map(movie=>(
-                            <GridListTile  className="released-movie-grid-item" key={movie.id} >
+                            <GridListTile  className="released-movie-grid-item" key={movie.id} onClick={()=>this.movieClickHandler(movie.id)} >
                                 <img className= "movie-poster"src={movie.poster_url} alt={movie.title}/>
                                 <GridListTileBar title={movie.title} subtitle={<span>Release Date: {new Date(movie.release_date).toDateString()}</span>}/>
                             </GridListTile>
