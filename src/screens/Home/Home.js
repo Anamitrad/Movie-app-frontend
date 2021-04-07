@@ -6,6 +6,21 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import moviesData from '../../common/moviesData';
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import 'typeface-roboto';
+import { Typography } from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import genres from '../../common/genre';
+import artists from '../../common/artists';
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -36,7 +51,44 @@ const styles = theme => ({
      }
  });
 class Home extends Component{
+    constructor() {
+        super();
+        this.state = {
+            movieName: "",
+            upcomingMovies: [],
+            releasedMovies: [],
+            genres: [],
+            artists: [],
+            genresList: [],
+            artistsList: [],
+            releaseDateStart: "",
+            releaseDateEnd: ""
+        }
+    }
+    movieNameChangeHandler = event => {
+        this.setState({ movieName: event.target.value });
+    }
 
+    genreSelectHandler = event => {
+        this.setState({ genres: event.target.value });
+    }
+
+    artistSelectHandler = event => {
+        this.setState({ artists: event.target.value });
+    }
+
+    releaseDateStartHandler = event => {
+        this.setState({ releaseDateStart: event.target.value });
+    }
+
+    releaseDateEndHandler = event => {
+        this.setState({ releaseDateEnd: event.target.value });
+    }
+
+    
+    filterApplyHandler = event => {
+     
+    }
      
     render()
     {
@@ -68,8 +120,89 @@ class Home extends Component{
                         ))}
                     </GridList>
                 </div>
+            <div className="right">
+                        <Card>
+                            <CardContent>
+                            <FormControl className={classes.formControl}>
+                                    <Typography className={classes.title} color="textSecondary">
+                                        FIND MOVIES BY:
+                                    </Typography>
+                                </FormControl>
+
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="movieName">Movie Name</InputLabel>
+                                    <Input id="movieName" onChange={this.movieNameChangeHandler} />
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="select-multiple-checkbox">Genres</InputLabel>
+                                    <Select
+                                        multiple
+                                        input={<Input id="select-multiple-checkbox-genre" />}
+                                        renderValue={selected => selected.join(',')}
+                                        value={this.state.genres}
+                                        onChange={this.genreSelectHandler}>
+                                            
+                                        <MenuItem value={0}>None</MenuItem>
+                                        {genres.map(genre => (
+                                            <MenuItem key={genre.id} value={genre.name}>
+                                                <Checkbox checked={this.state.genres.indexOf(genre.name) > -1} />
+                                                <ListItemText primary={genre.name} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
+                                    <Select
+                                        multiple
+                                        input={<Input id="select-multiple-checkbox" />}
+                                        renderValue={selected => selected.join(',')}
+                                        value={this.state.artists}
+                                        onChange={this.artistSelectHandler}
+                                    >
+                                        <MenuItem value={0}>None</MenuItem>
+                                        {artists.map(artist => (
+                                            <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
+                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name + " " + artist.last_name) > -1} />
+                                                <ListItemText primary={artist.first_name + " " + artist.last_name} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        id="releaseDateStart"
+                                        label="Release Date Start"
+                                        type="date"
+                                        defaultValue=""
+                                        InputLabelProps={{ shrink: true }}
+                                        onChange={this.releaseDateStartHandler}
+                                    />
+                                </FormControl>
+
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        id="releaseDateEnd"
+                                        label="Release Date End"
+                                        type="date"
+                                        defaultValue=""
+                                        InputLabelProps={{ shrink: true }}
+                                        onChange={this.releaseDateEndHandler}
+                                    />
+                                </FormControl>
+                                <br /><br />
+                                <FormControl className={classes.formControl}>
+                                    <Button onClick={() => this.filterApplyHandler()} variant="contained" color="primary">
+                                        APPLY
+                                    </Button>
+                                </FormControl>
+                            </CardContent>
+                        </Card>
+                    </div>
             </div>
-        </div>
+            </div>
         )
     }
 }
