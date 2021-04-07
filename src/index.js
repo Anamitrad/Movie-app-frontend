@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
+import  Home from './screens/Home/Home'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <div></div>,
+  <div><Home /></div>,
   document.getElementById('root')
 );
 
